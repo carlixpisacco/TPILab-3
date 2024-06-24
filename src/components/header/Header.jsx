@@ -3,16 +3,18 @@ import './Header.css'
 import SearchBar from '../searchBar/SearchBar';
 import PropTypes from "prop-types";
 import Selects from '../selects/Selects';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import AuthenticationContext from '../../services/authentication/Authentication.context';
 
 const Header = ({ onSearchBar, onSearchSelect }) => {
     const [hombreValue, setHombreValue] = useState('');
     const [mujerValue, setMujerValue] = useState('');
     const [ninoValue, setNinoValue] = useState('');
+    const { handleLogout } = useContext(AuthenticationContext);
     const navigate = useNavigate();
 
     let rol = "vendedor";
@@ -60,6 +62,11 @@ const Header = ({ onSearchBar, onSearchSelect }) => {
 
         onSearchSelect([value, type])
     };
+    const handleLogoutAndRedirect = () => {
+        console.log("cerrando sesion")
+        handleLogout();
+        navigate("/login");
+    };
 
 
     return (
@@ -100,14 +107,18 @@ const Header = ({ onSearchBar, onSearchSelect }) => {
                         />
                     </div>
 
-                    {/* botones*/}
-                    {rol === null && (
+                    {/* botones*/} 
+                    {rol === "vendedor" && (
                         <>
                             <div className="col-auto">
+                                <Link to={"/registerForm"}>
                                 <Button variant="success" className='btn-register'>Registrarse</Button>
+                                </Link>
                             </div>
                             <div className="col-auto">
+                                <Link to={"/login"}>
                                 <Button variant="info" className='btn-login'>Ingresar</Button>
+                                </Link>
                             </div>
                         </>
                     )}
@@ -128,7 +139,7 @@ const Header = ({ onSearchBar, onSearchSelect }) => {
 
                     {rol != null && (
                         <div className="col-auto">
-                            <Button variant="info" className='btn-logout'>Cerrar Sesión</Button>
+                            <Button variant="info" className='btn-logout' onClick={handleLogoutAndRedirect} >Cerrar Sesión</Button>
                         </div>
                     )}
 

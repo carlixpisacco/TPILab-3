@@ -4,14 +4,24 @@ import { Button } from 'react-bootstrap';
 import './BasicHeader.css';
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import { useContext } from 'react';
+import AuthenticationContext  from '../../services/authentication/Authentication.context'
 
 
 const BasicHeader = ({ text }) => {
     const navigate = useNavigate();
+    const { handleLogout } = useContext(AuthenticationContext);
 
     const handleBackButtonClick = () => {
         navigate("/");
     };
+
+    const handleLogoutAndRedirect = () => {
+        console.log("cerrando sesion")
+        handleLogout();
+        navigate("/login");
+    };
+
     return (
         <div>
             <header className="header">
@@ -26,7 +36,7 @@ const BasicHeader = ({ text }) => {
                             <span className="text">{text}</span>
                         </div>
                         <div className="col-auto logout-bheader-div" >
-                            <Button variant="info" className='logout-bheader'>Cerrar Sesión</Button>
+                        <Button variant="info" className='btn-logout' onClick={handleLogoutAndRedirect} >Cerrar Sesión</Button>
                         </div>
                     </div>
                 </div>
