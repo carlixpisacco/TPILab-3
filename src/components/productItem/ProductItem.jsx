@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import './ProductItem.css'
 import { useNavigate } from "react-router-dom";
 
-const ProductItem = ({ id, seller, title, category1, category2,condition,size,description,price,image, estado}) => { //el "estado cambia desde el carrito"
+const ProductItem = ({ id, seller, title, category1, category2, condition, size, description, price, image, estado }) => { //el "estado cambia desde el carrito"
     const formattedProductTitle = title.charAt(0).toUpperCase() + title.slice(1).toLowerCase();//pone primera letra en mayus y resto en minuscula.
     const formattedProductSeller = seller.charAt(0).toUpperCase() + seller.slice(1).toLowerCase();
 
@@ -19,9 +19,9 @@ const ProductItem = ({ id, seller, title, category1, category2,condition,size,de
                     title,
                     category1,
                     category2,
-                    condition, 
+                    condition,
                     size,
-                    description, 
+                    description,
                     price,
                     image,
                     estado,
@@ -42,16 +42,19 @@ const ProductItem = ({ id, seller, title, category1, category2,condition,size,de
                         variant="top"
                         src={image !== "" ? image : "https://bit.ly/47NylZk"}
                     />
+
                     <Card.Body>
                         <Card.Subtitle>{formattedProductTitle}</Card.Subtitle>
                         <div className="mb-3">${price}</div>
 
-                        {role !== 'vendedor' && role !== 'admin' && (
-                            <>
-                                <Button className="btn btn-comprar d-block mb-2 mx-auto">Comprar</Button>
-                                <Button className="btn btn-detalles d-block mx-auto" onClick={handleClickDetails}>Ver Detalles</Button>
-                            </>
+                        {role === 'comprador' && (
+                            <Button className="btn btn-comprar d-block mb-2 mx-auto">Comprar</Button>
                         )}
+
+                        {(role === null || role === '') && (
+                            <Button className="btn btn-detalles d-block mx-auto" onClick={handleClickDetails}>Ver Detalles</Button>
+                        )}
+
                         {role === 'vendedor' && (
                             <>
                                 {estado ? (
@@ -64,6 +67,7 @@ const ProductItem = ({ id, seller, title, category1, category2,condition,size,de
                                 )}
                             </>
                         )}
+
                         {role === 'admin' && (
                             <>
                                 <Button className="btn btn-eliminar d-block mx-auto">Eliminar Producto</Button>
@@ -72,8 +76,8 @@ const ProductItem = ({ id, seller, title, category1, category2,condition,size,de
                                 )}
                             </>
                         )}
-
                     </Card.Body>
+
                 </Card>
             </div>
         </div>
@@ -84,9 +88,9 @@ ProductItem.propTypes = {
     id: PropTypes.number.isRequired,
     seller: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    category1:PropTypes.string.isRequired,
-    category2:PropTypes.string.isRequired,
-    condition:PropTypes.string.isRequired,
+    category1: PropTypes.string.isRequired,
+    category2: PropTypes.string.isRequired,
+    condition: PropTypes.string.isRequired,
     size: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,

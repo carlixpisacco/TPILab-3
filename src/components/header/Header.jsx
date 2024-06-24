@@ -7,7 +7,7 @@ import { useContext, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AuthenticationContext from '../../services/authentication/Authentication.context';
 
 const Header = ({ onSearchBar, onSearchSelect }) => {
@@ -17,7 +17,7 @@ const Header = ({ onSearchBar, onSearchSelect }) => {
     const { handleLogout } = useContext(AuthenticationContext);
     const navigate = useNavigate();
 
-    let rol = "vendedor";
+    let rol = null;
 
     const handleClickNewProduct = () => {
         navigate("/addProduct");
@@ -62,12 +62,24 @@ const Header = ({ onSearchBar, onSearchSelect }) => {
 
         onSearchSelect([value, type])
     };
+
     const handleLogoutAndRedirect = () => {
         console.log("cerrando sesion")
         handleLogout();
         navigate("/login");
     };
 
+    const handleClickLogin = () => {
+        navigate("/login");
+    };
+
+    const handleClickRegister = () => {
+        navigate("/preRegister");
+    };
+
+    const handleShoppingCartClick = () => {
+        navigate('/shoppingCart');
+    };
 
     return (
         <header className="header">
@@ -108,24 +120,20 @@ const Header = ({ onSearchBar, onSearchSelect }) => {
                     </div>
 
                     {/* botones*/} 
-                    {rol === "vendedor" && (
+                    {rol === null && (
                         <>
                             <div className="col-auto">
-                                <Link to={"/registerForm"}>
-                                <Button variant="success" className='btn-register'>Registrarse</Button>
-                                </Link>
+                                <Button variant="success" className='btn-register' onClick={handleClickRegister}>Registrarse</Button>
                             </div>
                             <div className="col-auto">
-                                <Link to={"/login"}>
-                                <Button variant="info" className='btn-login'>Ingresar</Button>
-                                </Link>
+                                <Button variant="info" className='btn-login' onClick={handleClickLogin}>Ingresar</Button>
                             </div>
                         </>
                     )}
 
                     {rol === "comprador" && (
                         <div className="col-auto">
-                            <Button variant="info" className='btn-shopcart'>
+                            <Button variant="info" className='btn-shopcart' onClick={handleShoppingCartClick}>
                                 <FontAwesomeIcon icon={faShoppingCart} className='carrito'/>
                             </Button>
                         </div>

@@ -7,6 +7,7 @@ import NotFound from './components/notFound/NotFound'
 import ShoppingCart from './components/shoppingCart/ShoppingCart'
 import Login from './components/login/Login'
 import RegisterForm from './components/registerForm/RegisterForm'
+import PreRegisterForm from "./components/preRegisterForm/PreRegisterForm";
 function App() {
 
   const router = createBrowserRouter([
@@ -48,6 +49,11 @@ function App() {
     {
       path: "/registerForm",
       element: <RegisterForm />,
+    },
+
+    {
+      path: "/preRegister",
+      element: <PreRegisterForm/>,
     },
 
     {
