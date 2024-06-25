@@ -15,7 +15,6 @@ const RegisterForm = () => {
     username: '',
     email: '',
     password: '',
-    status: true,
     rol: type,
   });
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -45,7 +44,7 @@ const RegisterForm = () => {
       await handleRegister(formData);
       setSuccess("Registro exitoso.");
       setLocalError(null);
-      navigate("/login");
+    
     } catch (err) {
       setLocalError(err.message || "Error en el registro.");
     }

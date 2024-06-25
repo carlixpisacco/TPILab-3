@@ -3,7 +3,7 @@ import ProductItem from "../productItem/ProductItem";
 import './Products.css'
 
 const Products = ({ products }) => {
-  let role = null;
+  let rol = null;
   let username = "kevin"; //username esta dentro del usuario, dentro del context.
 
   return (
@@ -11,7 +11,7 @@ const Products = ({ products }) => {
       <div className="products-container">
         {products.map((product, index) => {
           // condición para el rol de comprador o nulo
-          if (!role || role === "comprador") {
+          if (!rol || rol === "comprador") {
             // renderiza solo los productos cuyo estado es "true"
             if (product.estado) {
               return (
@@ -33,7 +33,7 @@ const Products = ({ products }) => {
             }
           }
           // condición para el rol de vendedor
-          else if (role === "vendedor") {
+          else if (rol === "vendedor") {
             // renderiza solo los productos del vendedor actual
             if (product.productSeller === username) {
               return (
@@ -55,7 +55,7 @@ const Products = ({ products }) => {
             }
           }
           // condición para el rol de admin
-          else if (role === "admin") {
+          else if (rol === "admin") {
             // renderiza todos los productos
             return (
               <ProductItem

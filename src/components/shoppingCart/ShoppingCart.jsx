@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Card, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 
 const ShoppingCart = () => {
     const [cart, setCart] = useState([{ name: 'Producto de prueba', price: 100 }]);
@@ -35,11 +34,6 @@ const ShoppingCart = () => {
                 <p>Total: ${costoTotal()}</p>
                 <Button className="btn btn-success mt-3" onClick={addCart}>Agregar producto</Button>
             </Card.Body>
-            <div className="mt-3">
-                <h3>Selecciona tu rol:</h3>
-                <Link className="btn btn-info mr-2" to="/login?role=vendedor">Vendedor</Link>
-                <Link className="btn btn-warning" to="/login?role=comprador">Comprador</Link>
-            </div>
         </Card>
     );
 };

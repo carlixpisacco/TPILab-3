@@ -9,7 +9,7 @@ const ProductItem = ({ id, seller, title, category1, category2, condition, size,
 
     const navigate = useNavigate();
 
-    const role = "comprador"; //esta de prueba aca el rol lo voy a sacar del usecontext de usuario.
+    const rol = null; //esta de prueba aca el rol lo voy a sacar del usecontext de usuario.
 
     const handleClickDetails = () => {
         navigate(`/product/${id}`, {
@@ -47,15 +47,15 @@ const ProductItem = ({ id, seller, title, category1, category2, condition, size,
                         <Card.Subtitle>{formattedProductTitle}</Card.Subtitle>
                         <div className="mb-3">${price}</div>
 
-                        {role === 'comprador' && (
+                        {rol === 'comprador' && (
                             <Button className="btn btn-comprar d-block mb-2 mx-auto">Comprar</Button>
                         )}
 
-                        {(role === null || role === '') && (
+                        {(rol === null || rol === '') && (
                             <Button className="btn btn-detalles d-block mx-auto" onClick={handleClickDetails}>Ver Detalles</Button>
                         )}
 
-                        {role === 'vendedor' && (
+                        {rol === 'vendedor' && (
                             <>
                                 {estado ? (
                                     <>
@@ -68,7 +68,7 @@ const ProductItem = ({ id, seller, title, category1, category2, condition, size,
                             </>
                         )}
 
-                        {role === 'admin' && (
+                        {rol === 'admin' && (
                             <>
                                 <Button className="btn btn-eliminar d-block mx-auto">Eliminar Producto</Button>
                                 {!estado && (

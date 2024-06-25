@@ -8,6 +8,8 @@ import ShoppingCart from './components/shoppingCart/ShoppingCart'
 import Login from './components/login/Login'
 import RegisterForm from './components/registerForm/RegisterForm'
 import PreRegisterForm from "./components/preRegisterForm/PreRegisterForm";
+import Protected from "./components/protected/Protected";
+
 function App() {
 
   const router = createBrowserRouter([
@@ -23,21 +25,21 @@ function App() {
 
     {
       path: "/addProduct",
-      element: //(
-        //<Protected>
+      element: (
+        <Protected>
           <SellProduct/>
-      //</Protected>
-    //),
+      </Protected>
+    ),
     },
 
     
     {
       path: "/shoppingCart",
-      element: //(
-      //<Protected>
+      element: (
+      <Protected>
         <ShoppingCart/>
-      //</Protected>
-    //),
+      </Protected>
+    ),
     },
 
     
@@ -71,5 +73,3 @@ function App() {
 
 export default App
 
-//    
-//   

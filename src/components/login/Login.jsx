@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Form, Button, Card, Alert, FormGroup, FormLabel, FormControl } from "react-bootstrap";
-import { AuthenticationContext } from "../../services/authentication/Authentication.context"; 
-import { Link, useNavigate } from "react-router-dom";
+import { AuthenticationContext } from "../../services/authentication/Authentication.context";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -20,6 +20,10 @@ const Login = () => {
         await handleLogin(email, password);
         navigate('/');
     };
+
+    const handleRegisterClick = () => {
+        navigate('/preRegister');
+      };
 
     return (
         <div>
@@ -60,7 +64,15 @@ const Login = () => {
                 )}
 
                 <div className="mt-3">
-                    <p>Sos nuevo? | <Link to="/registerForm">Registrarse</Link></p>
+                    <p>
+                        Sos nuevo? |{' '}
+                        <span
+                            onClick={handleRegisterClick}
+                            style={{ color: 'rgb(40, 40, 166)', textDecoration: 'underline', cursor: 'pointer' }}
+                        >
+                            Registrarse
+                        </span>
+                    </p>
                 </div>
             </Card>
         </div>

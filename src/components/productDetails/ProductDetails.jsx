@@ -7,8 +7,9 @@ const ProductDetails = () => {
   const location = useLocation();
   const { seller,title, category1, category2, condition, size, description, price, image} = location.state.product;
   const formattedProductTitle = title.charAt(0).toUpperCase() + title.slice(1).toLowerCase();//pone primera letra en mayus y resto en minuscula.
-    const formattedProductSeller = seller.charAt(0).toUpperCase() + seller.slice(1).toLowerCase();
+  const formattedProductSeller = seller.charAt(0).toUpperCase() + seller.slice(1).toLowerCase();
 
+  let rol = null 
   return (
     <>
       <BasicHeader text={"DETALLES DEL PRODUCTO"} />
@@ -25,7 +26,10 @@ const ProductDetails = () => {
           <p className="text-size"><span className="text-label">Talle:</span> {size}</p>
           <p className="text-description">{description}</p>
 
+          {rol === 'comprador' && (
           <Button className="btn btn-comprar mx-auto"> Comprar </Button>
+          )}
+
         </div>
 
       </div>
