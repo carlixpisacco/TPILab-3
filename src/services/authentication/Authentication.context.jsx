@@ -1,61 +1,43 @@
-import { useState, createContext, useEffect } from "react";
+import { useState, createContext } from "react";
 import PropTypes from "prop-types";
+import { jwtDecode } from "jwt-decode";
 
 export const AuthenticationContext = createContext({});
 
 export const AuthenticationContextProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
+  const [user, setUser] = useState(null); // Usualmente se inicializa como null
 
-
-  useEffect(() => {
-    const userValueString = localStorage.getItem("user");
-    console.log("Valor de usuario en localStorage:", userValueString);
-
-    if (userValueString) {
+  const handleLogin = () => {
+    const storedToken = localStorage.getItem('token');
+      console.log("token", storedToken);
+    if (storedToken) {
       try {
-        const parsedUser = JSON.parse(userValueString);
-        setUser(parsedUser);
+        const decodedToken = jwtDecode(storedToken);
+        const userData = {
+          id: decodedToken.sub,
+          username: decodedToken.username,
+          email: decodedToken.email,
+          status: decodedToken.status,
+          rol: decodedToken.rol,
+        };
+        
+        setUser(userData); // Establecer el usuario en el estado
+        localStorage.setItem('user', JSON.stringify(userData)); // Guardar el usuario en localStorage si es necesario
+
       } catch (error) {
-        console.error("Error al parsear el usuario desde localStorage:", error.message);
-        localStorage.removeItem("user"); // Elimina el usuario si hay un error al parsear
+        console.error("Error al decodificar el token:", error.message);
+        setError('Token inválido');
       }
-    }
-  }, []);
-
-  const handleLogin = async (email, password) => {
-    try {
-      const response = await fetch("http://localhost:8000/login", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, password })
-      });
-
-      const responseData = await response.json();
-      console.log('Response status:', response.status);
-      console.log('Response data:', responseData);
-
-      if (response.ok) {
-        const { token, user: userData } = responseData;
-        setUser(userData); // Almacena los datos del usuario en el contexto
-        localStorage.setItem("token", token); // Guarda el token en localStorage
-        localStorage.setItem("user", JSON.stringify(userData));
-        setError(null);
-      } else {
-        setError(responseData.message);
-      }
-    } catch (error) {
-      setError('Error en la solicitud');
+    } else {
+      setError('No hay token disponible');
     }
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
     setUser(null);
-    console.log(setUser, "cerro sesion")
+    localStorage.removeItem("user");
+    console.log("cerrando sesion", user);
   };
 
   const handleRegister = async (formData) => {
@@ -82,7 +64,6 @@ export const AuthenticationContextProvider = ({ children }) => {
     }
   };
 
-
   return (
     <AuthenticationContext.Provider value={{ user, handleLogin, handleLogout, handleRegister, error }}>
       {children}
@@ -91,8 +72,7 @@ export const AuthenticationContextProvider = ({ children }) => {
 };
 
 AuthenticationContextProvider.propTypes = {
-  children: PropTypes.object.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default AuthenticationContext;
-
