@@ -17,7 +17,7 @@ const Header = ({ onSearchBar, onSearchSelect }) => {
     const { handleLogout } = useContext(AuthenticationContext);
     const navigate = useNavigate();
 
-    let rol = null;
+    let rol = "vendedor";
 
     const handleClickNewProduct = () => {
         navigate("/addProduct");

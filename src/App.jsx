@@ -25,11 +25,11 @@ function App() {
 
     {
       path: "/addProduct",
-      element: (
-        <Protected>
+      element: //(
+        //<Protected>
           <SellProduct/>
-      </Protected>
-    ),
+        //</Protected>
+    //),
     },
 
     

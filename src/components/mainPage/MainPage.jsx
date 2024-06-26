@@ -56,7 +56,7 @@ const MainPage = () => {
 
   return (
     <>
-      <Header onSearchBar={handleSearchBar} onSearchSelect={handleSearchSelect} />
+      <Header onSearchBar={handleSearchBar} onSearchSelect={handleSearchSelect}/>
       <div className='contenedor-main'>
         {filteredProducts.length === 0 ? <NoProducts /> : <Products products={filteredProducts} />}
       </div>

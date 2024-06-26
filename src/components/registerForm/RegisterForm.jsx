@@ -78,7 +78,7 @@ const RegisterForm = () => {
               <FormControl
                 type="text"
                 name="username"
-                value={formData.firstName}
+                value={formData.username}
                 placeholder="Ingresa tu nombre de usuario"
                 onChange={handleChange}
                 required
@@ -138,9 +138,6 @@ const RegisterForm = () => {
                 {success}
               </Alert>
             )}
-
-            <input type="hidden" name="rol" value={formData.rol} />
-
           </Form>
         </Card>
       </div>
