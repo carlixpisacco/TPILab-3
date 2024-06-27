@@ -33,7 +33,7 @@ const Login = () => {
             })
             .then(data => {
                 console.log("Respuesta del servidor:", data); // Verificar la respuesta del servidor
-                const jwtToken = data.token; // Extraer el token JWT de la respuesta del servidor
+                const jwtToken = data.accessToken; // Extraer el token JWT de la respuesta del servidor
                 if (jwtToken) {
                     updateToken(jwtToken); // Actualizar el token en el contexto de tokens
                     handleLogin(); // Realizar el proceso de inicio de sesión

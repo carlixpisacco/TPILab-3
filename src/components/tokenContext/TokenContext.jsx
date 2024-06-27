@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { createContext, useState } from "react"
+import { createContext, useState} from "react"
 
 
 const TokenContext = createContext();
@@ -11,7 +11,6 @@ const TokenProvider = ({ children }) => {
     const updateToken = (newToken) => {
         setToken(newToken);
         localStorage.setItem('token', newToken);
-        console.log("tokeeen", newToken)
     }
 
     const deleteToken = () => {

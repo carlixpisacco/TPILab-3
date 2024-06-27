@@ -1,4 +1,4 @@
-import { useState, createContext } from "react";
+import { useState, createContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import { jwtDecode } from "jwt-decode";
 
@@ -8,9 +8,11 @@ export const AuthenticationContextProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null); // Usualmente se inicializa como null
 
+
+
   const handleLogin = () => {
     const storedToken = localStorage.getItem('token');
-      console.log("token", storedToken);
+    console.log("token", storedToken);
     if (storedToken) {
       try {
         const decodedToken = jwtDecode(storedToken);
@@ -21,10 +23,10 @@ export const AuthenticationContextProvider = ({ children }) => {
           status: decodedToken.status,
           rol: decodedToken.rol,
         };
-        
+
         setUser(userData); // Establecer el usuario en el estado
         localStorage.setItem('user', JSON.stringify(userData)); // Guardar el usuario en localStorage si es necesario
-
+        console.log('user', userData)
       } catch (error) {
         console.error("Error al decodificar el token:", error.message);
         setError('Token inválido');
@@ -33,6 +35,16 @@ export const AuthenticationContextProvider = ({ children }) => {
       setError('No hay token disponible');
     }
   };
+
+  useEffect(() => {
+    // Esta función se ejecutará al cargar el componente
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      console.log("Usuario recuperado:1", parsedUser);
+      setUser(parsedUser)
+    }
+  }, []);
 
   const handleLogout = () => {
     setUser(null);
